@@ -1,5 +1,3 @@
-const fs = require("fs");
-const chalk = require("chalk");
 const yargs = require("yargs");
 const notes = require("./notes.js");
 
@@ -7,17 +5,24 @@ yargs.version("1.1.0");
 
 yargs.command({
 	command: "list",
-	describe: "add a list",
+	describe: "list notes",
 	handler: () => {
-		console.log("list command");
+		notes.listNotes();
 	},
 });
 
 yargs.command({
 	command: "read",
-	describe: "read",
-	handler: () => {
-		console.log("read command");
+	describe: "read notes",
+	builder: {
+		title: {
+			describe: "note title",
+			demandOption: true,
+			type: "string",
+		},
+	},
+	handler: (argv) => {
+		notes.readNotes(argv.title);
 	},
 });
 
